@@ -18,6 +18,6 @@ module.exports = {
     uri:    process.env.MONGOLAB_URI ||
             process.env.MONGOHQ_URL ||
             process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
-            'mongodb://nodejitsu:a56a1a75be8fc17e5f750083dd3e1672@troup.mongohq.com:10001/nodejitsudb5637114834'
+            'mongodb://localhost/lockers'
   }
 };
