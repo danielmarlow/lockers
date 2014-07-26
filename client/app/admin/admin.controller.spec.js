@@ -15,7 +15,8 @@ describe('Controller: AdminCtrl', function () {
     });
   }));
 
-  it('should ...', function () {
-    expect(1).toEqual(1);
+  it('should have a method to create data', function () {
+    expect(angular.isFunction(scope.createData)).toBeTruthy();
   });
+
 });
