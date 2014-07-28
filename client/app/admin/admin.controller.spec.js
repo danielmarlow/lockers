@@ -15,8 +15,16 @@ describe('Controller: AdminCtrl', function () {
     });
   }));
 
+  it('should have a method to wipe all data', function () {
+    expect(angular.isFunction(scope.wipeData)).toBeTruthy();
+    scope.wipeData();
+    expect(scope.lockers.length).toBe(0);
+  });
+
   it('should have a method to create data', function () {
     expect(angular.isFunction(scope.createData)).toBeTruthy();
   });
+
+  
 
 });
