@@ -1,6 +1,6 @@
 {
   "name": "lockers",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "server/app.js",
   "dependencies": {
     "express": "~4.0.0",
@@ -81,5 +81,9 @@
     "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update"
   },
   "private": true,
-  "subdomain": "lockers"
+  "subdomain": "lockers",
+  "domains": [
+    "goldilockers.com",
+    "www.goldilockers.com"
+  ]
 }
