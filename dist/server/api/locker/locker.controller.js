@@ -64,6 +64,38 @@ exports.destroy = function(req, res) {
   });
 };
 
+// Deletes everything
+exports.clearAll = function(req, res) {
+  Locker.find().remove(function(err) {
+    if(err) { return handleError(res, err); }
+    return res.json(204, {});
+  })
+};
+
+// Setup initial seed data
+exports.setup = function(req, res) {
+  var lockers = [];
+  var lockerSize;
+  for (var i=1; i<=3000; i++) {
+    if (i<=1000) {
+      lockerSize = 'small';
+    } else if (i<=2000) {
+      lockerSize = 'medium';
+    } else {
+      lockerSize = 'large';
+    }
+    lockers.push({
+      slot: i.toString(),
+      size: lockerSize,
+      inUse: false
+    });
+  }
+  Locker.collection.insert(lockers, function(err, locker) {
+    if(err) { return handleError(res, err); }
+    return res.json(201, locker);
+  });
+}
+
 function handleError(res, err) {
   return res.send(500, err);
 }
