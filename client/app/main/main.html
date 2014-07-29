@@ -29,18 +29,6 @@
     </div>
   </div>
   <div class="row">
-    <div class="claim-check col-lg-4 col-lg-offset-4" ng-show="checkedInLocker">
-      <h2>Claim Check</h2>
-      <h5>{{checkedInLocker.size}}</h4>
-      <h1 class="claim-id">{{checkedInLocker.slot}}</h1>
-      <h4>Locker Number</h4>
-      <h4>
-        <input type="tel" name="phone" ng-model="phone" placeholder="phone number"><br />
-        <button class="btn btn-info btn-sm" ng-click="sendSMS()">Send SMS Claim Check</button>
-      </h4>
-    </div>
-  </div>
-  <div class="row">
     <div class="claim-it col-lg-6 col-lg-offset-3">
       <form ng-submit="pickUp()">
         <p><input type="text" pattern="\d*" ng-model="lockerNumber" name="lockerNumber" size="4"/></p>
@@ -53,6 +41,32 @@
 
   </div> <!-- row -->
 </div>
+
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Claim Check</h3>
+    </div>
+    <div class="modal-body">
+      <div class="claim-check">
+        <h2>Claim Check</h2>
+        <h5>{{locker.size}}</h4>
+        <h1 class="claim-id">{{locker.slot}}</h1>
+        <h4>Locker Number</h4>
+        <div class="send-sms">
+          <form name="myForm" novalidate ng-submit="sendSMS(myForm)">
+            <p><input type="tel" ng-model="$parent.phone" name="phone" placeholder="800-555-1212"></p>
+            <p><button type="submit" class="btn btn-info btn-sm">Send SMS Claim Check</button></p>
+          </form>
+          <p>{{message}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-warning" ng-click="done()">Done</button>
+    </div>
+</script>
+
 
 <footer class="footer">
   <div class="container">

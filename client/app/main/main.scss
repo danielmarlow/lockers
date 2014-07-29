@@ -56,8 +56,11 @@
   text-align: center;
   .h1 { font-size: 10em; }
   .h2 { font-size: 1em; }
-  .h4 { font-size: 0.7em; }
   .h5 { font-size: 0.5em; }
+  .send-sms {
+    border-top: 1px solid #cfcfcf;
+    padding-top: 1em;
+  }
 }
 
 .claim-it {

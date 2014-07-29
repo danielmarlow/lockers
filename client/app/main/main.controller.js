@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lockersApp')
-  .controller('MainCtrl', function ($scope, $http, $log, Locker, Twilio) {
+  .controller('MainCtrl', function ($scope, $http, $log, $timeout, $modal, Locker) {
 
     $scope.pickupMessage = '';
 
@@ -40,14 +40,16 @@ angular.module('lockersApp')
           return locker.size === size && !locker.inUse;
         })
         .first().value();
-      $scope.checkedInLocker = firstLocker;
-      firstLocker.inUse = true;
-      firstLocker.$update();
-      refreshLockers();
+      if (firstLocker) {
+        $scope.checkedInLocker = firstLocker;
+        firstLocker.inUse = true;
+        firstLocker.$update();
+        $scope.open('sm');
+        refreshLockers();
+      }
     };
 
     $scope.pickUp = function() {
-      // $log.debug($scope.lockerNumber);
       var theLocker = _.chain($scope.lockers)
          .filter(function(locker) {
         return locker.slot === $scope.lockerNumber && locker.inUse;
@@ -59,14 +61,49 @@ angular.module('lockersApp')
         $scope.pickupMessage = 'Slot ' + $scope.lockerNumber + ' is now available.';
         refreshLockers();
         $scope.lockerNumber = '';
+        $timeout(function() {
+          $scope.pickupMessage = '';
+        }, 5000);
       } else {
         $scope.pickupMessage = 'Yeah, I\'m pretty sure somebody already picked up that locker\'s stuff.';
       }
     };
 
-    $scope.sendSMS = function() {
-      $log.debug('Locker number: ' + $scope.checkedInLocker.slot);
-      Twilio.sendSMS({locker: $scope.checkedInLocker.slot, number: $scope.phone});
+    $scope.open = function (size) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: ModalInstanceCtrl,
+        size: size,
+        resolve: {
+          locker: function () {
+            return $scope.checkedInLocker;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        $scope.selected = selectedItem;
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
     };
 
   });
+
+  var ModalInstanceCtrl = function ($scope, $log, $modalInstance, locker, Twilio) {
+
+  $scope.locker = locker;
+
+  $scope.sendSMS = function(theForm) {
+    Twilio.sendSMS({locker: $scope.locker.slot, number: $scope.phone}, function() {
+      $scope.message = 'Claim check sent!';
+    }, function() {
+      $scope.message = 'Claim check could not be sent to that number.';
+    });
+  };
+
+  $scope.done = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};
