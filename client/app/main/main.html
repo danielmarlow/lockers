@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col-lg-12">
       <h1 class="text-center">{{openLockers}} are waiting to be filled with stuff!</h1>
-      <p class="text-center">There are {{lockers.length}} in all. That means {{((lockers.length-openLockers)/lockers.length)*100 | currency}}% occupancy.</p>
+      <p class="text-center">There are {{lockers.length}} in all. That means {{((lockers.length-openLockers)/lockers.length)*100 | number:2}}% occupancy.</p>
     </div>
   <div>
   <div class="row">
