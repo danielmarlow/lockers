@@ -11,20 +11,23 @@ angular.module('lockersApp')
         $scope.smallCount = _.filter(lockers, function(locker) {
           return locker.size === 'small';
         }).length;
-        $scope.smallCountInUse = _.filter(lockers, function(locker) {
-          return locker.size === 'small' && locker.inUse;
+        $scope.smallCountNotInUse = _.filter(lockers, function(locker) {
+          return locker.size === 'small' && !locker.inUse;
         }).length;
         $scope.mediumCount = _.filter(lockers, function(locker) {
           return locker.size === 'medium';
         }).length;
-        $scope.mediumCountInUse = _.filter(lockers, function(locker) {
-          return locker.size === 'medium' && locker.inUse;
+        $scope.mediumCountNotInUse = _.filter(lockers, function(locker) {
+          return locker.size === 'medium' && !locker.inUse;
         }).length;
         $scope.largeCount = _.filter(lockers, function(locker) {
           return locker.size === 'large';
         }).length;
-        $scope.largeCountInUse = _.filter(lockers, function(locker) {
-          return locker.size === 'large' && locker.inUse;
+        $scope.largeCountNotInUse = _.filter(lockers, function(locker) {
+          return locker.size === 'large' && !locker.inUse;
+        }).length;
+        $scope.openLockers = _.filter(lockers, function(locker) {
+          return !locker.inUse;
         }).length;
       });
     }
@@ -55,6 +58,7 @@ angular.module('lockersApp')
         theLocker.$update();
         $scope.pickupMessage = 'Slot ' + $scope.lockerNumber + ' is now available.';
         refreshLockers();
+        $scope.lockerNumber = '';
       } else {
         $scope.pickupMessage = 'Yeah, I\'m pretty sure somebody already picked up that locker\'s stuff.';
       }

@@ -10,22 +10,44 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <p>Total: {{lockers.length}}</p>
-      <p>Small in use: {{smallCountInUse}} <button class="btn btn-primary" ng-click="dropOff('small')">Drop off something small</button></p>
-      <p>Medium in use: {{mediumCountInUse}} <button class="btn btn-primary" ng-click="dropOff('medium')">Drop off something just right</button></p>
-      <p>Large in use: {{largeCountInUse}} <button class="btn btn-primary" ng-click="dropOff('large')">Drop off a big thing</button></p>
-      <p>{{checkedInLocker}}</p>
-      <p>
-        <form ng-submit="pickUp()">
-          <input type="text" pattern="\d*" ng-model="lockerNumber" name="lockerNumber" />
-          <input class="btn btn-primary" type="submit" value="Pick it up!" />
-          <p ng-show="pickupMessage">
-            {{pickupMessage}}
-          </p>
-        </form>
-      </p>
+      <h1 class="text-center">{{openLockers}} are waiting to be filled with stuff!</h1>
+      <p class="text-center">There are {{lockers.length}} in all. That means {{((lockers.length-openLockers)/lockers.length)*100}}% occupancy.</p>
+    </div>
+  <div>
+  <div class="row">
+    <div class="col-lg-4 big-clicker" ng-click="dropOff('small')">
+      <p class="words">Too small</p>
+      <p class="caption">Small lockers free: {{smallCountNotInUse}}</p>
+    </div>
+    <div class="col-lg-4 big-clicker" ng-click="dropOff('medium')">
+      <p class="words">Just right!</p>
+      <p class="caption">Medium lockers free: {{mediumCountNotInUse}}</p>
+    </div>
+    <div class="col-lg-4 big-clicker" ng-click="dropOff('large')">
+      <p class="words">Too BIG!</p>
+      <p class="caption">Large lockers free: {{largeCountNotInUse}}</p>
     </div>
   </div>
+  <div class="row">
+    <div class="claim-check col-lg-4 col-lg-offset-4" ng-show="checkedInLocker">
+      <h2>Claim Check</h2>
+      <h5>{{checkedInLocker.size}}</h4>
+      <h1 class="claim-id">{{checkedInLocker.slot}}</h1>
+      <h4>Locker Number</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="claim-it col-lg-6 col-lg-offset-3">
+      <form ng-submit="pickUp()">
+        <p><input type="text" pattern="\d*" ng-model="lockerNumber" name="lockerNumber" size="4"/></p>
+        <p><input class="btn btn-large btn-primary" type="submit" value="Pick it up!" /></p>
+        <p ng-show="pickupMessage">
+          {{pickupMessage}}
+        </p>
+      </form>
+    </div>
+
+  </div> <!-- row -->
 </div>
 
 <footer class="footer">
