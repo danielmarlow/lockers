@@ -10,10 +10,15 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="text-center">{{openLockers}} are waiting to be filled with stuff!</h1>
+      <h1 class="text-center">{{openLockers}} waiting to be filled with stuff!</h1>
       <p class="text-center">There are {{lockers.length}} in all. That means {{((lockers.length-openLockers)/lockers.length)*100 | number:2}}% occupancy.</p>
     </div>
   <div>
+  <div class="row">
+    <div class="col-lg-12">
+      <h2 class="text-center">Stow some stuff in a just-right sized locker!</h2>
+    </div>
+  </div>
   <div class="row">
     <div class="col-lg-4 big-clicker" ng-click="dropOff('small')">
       <p class="words">Too small</p>
@@ -45,18 +50,19 @@
 
 <script type="text/ng-template" id="myModalContent.html">
     <div class="modal-header">
-        <h3 class="modal-title">Claim Check</h3>
+        <h3 class="modal-title"></h3>
     </div>
     <div class="modal-body">
       <div class="claim-check">
         <h2>Claim Check</h2>
-        <h5>{{locker.size}}</h4>
+        <h4>Locker</h4>
         <h1 class="claim-id">{{locker.slot}}</h1>
-        <h4>Locker Number</h4>
+        <h5>{{locker.size}}</h4>
         <div class="send-sms">
           <form name="myForm" novalidate ng-submit="sendSMS(myForm)">
-            <p><input type="tel" ng-model="$parent.phone" name="phone" placeholder="800-555-1212"></p>
-            <p><button type="submit" class="btn btn-info btn-sm">Send SMS Claim Check</button></p>
+            <p>Send this claim check to a mobile phone.</p>
+            <p><input type="tel" ng-model="$parent.phone" name="phone" placeholder="800-555-1212" size="12" required>
+            <button type="submit" class="btn btn-link" ng-disabled="!myForm.$valid">Send SMS</button></p>
           </form>
           <p>{{message}}</p>
         </div>
