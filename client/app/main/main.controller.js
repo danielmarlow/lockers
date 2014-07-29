@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lockersApp')
-  .controller('MainCtrl', function ($scope, $http, $log, Locker) {
+  .controller('MainCtrl', function ($scope, $http, $log, Locker, Twilio) {
 
     $scope.pickupMessage = '';
 
@@ -62,6 +62,11 @@ angular.module('lockersApp')
       } else {
         $scope.pickupMessage = 'Yeah, I\'m pretty sure somebody already picked up that locker\'s stuff.';
       }
+    };
+
+    $scope.sendSMS = function() {
+      $log.debug('Locker number: ' + $scope.checkedInLocker.slot);
+      Twilio.sendSMS({locker: $scope.checkedInLocker.slot, number: $scope.phone});
     };
 
   });
