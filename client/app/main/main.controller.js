@@ -3,7 +3,7 @@
 angular.module('lockersApp')
   .controller('MainCtrl', function ($scope, $http, $log, Locker) {
 
-    $scope.pickupMessage;
+    $scope.pickupMessage = '';
 
     function refreshLockers() {
       Locker.query().$promise.then(function(lockers) {

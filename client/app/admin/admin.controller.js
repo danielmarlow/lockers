@@ -4,42 +4,36 @@ angular.module('lockersApp')
   .controller('AdminCtrl', function ($scope, $log, Locker) {
 
     $scope.lockersInUse = [];
+    $scope.lockers = [];
 
     function refreshLockers() {
-      Locker.query().$promise.then(function(lockers) {
-        $scope.lockers = lockers;
-        $scope.lockersInUse = _.filter(lockers, function(locker) {
-          return locker.inUse;
-        });
+      $scope.lockersInUse = _.filter($scope.lockers, function(locker) {
+        return locker.inUse;
       });
+      $scope.buttonDisabled = false;
     }
 
-    refreshLockers();
+    Locker.query().$promise.then(function(lockers) {
+      $scope.lockers = lockers;
+      refreshLockers();
+    });
 
     $scope.wipeData = function() {
-      angular.forEach($scope.lockers, function(locker) {
-        locker.$remove();
+      $scope.buttonDisabled = true;
+      Locker.wipe().$promise.then(function() {
+        $scope.lockers = [];
+        refreshLockers();
       });
-      refreshLockers();
     };
 
     $scope.createData = function() {
-      var lockerSize;
-      for (var i=1; i<=3000; i++) {
-        if (i<=1000) {
-          lockerSize = 'small';
-        } else if (i<=2000) {
-          lockerSize = 'medium';
-        } else {
-          lockerSize = 'large';
-        }
-        Locker.save({
-          slot: i.toString(),
-          size: lockerSize,
-          inUse: false
-        });
-      }
-      refreshLockers();
+      console.log('createData');
+      $scope.buttonDisabled = true;
+      Locker.setup().$promise.then(function(lockers) {
+        console.log('returned from setup on server');
+        $scope.lockers = lockers;
+        refreshLockers();
+      });
     };
 
     $scope.showByNumber = function() {

@@ -20,8 +20,8 @@
         <button class="btn btn-primary btn-large" name="show-by-number-button" ng-click="showByNumber()">Show me</button>
         {{selectedLocker}}
       </div>
-      <button class="btn btn-primary btn-large" name="seed" ng-click="wipeData()">Wipe data</button>
-      <button class="btn btn-primary btn-large" name="seed" ng-click="createData()">Create data</button>
+      <button class="btn btn-primary btn-large" name="seed" ng-click="wipeData()" ng-disabled="buttonDisabled">Wipe data</button>
+      <button class="btn btn-primary btn-large" name="seed" ng-click="createData()"ng-disabled="buttonDisabled">Create data</button>
       <div class="col-lg-12">
         <h3>{{lockersInUse.length}} lockers in use.</h3>
         <p ng-repeat="locker in lockersInUse">

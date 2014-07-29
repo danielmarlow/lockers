@@ -8,6 +8,17 @@ angular.module('lockersApp')
       update: {
         method: 'PUT',
         params: {}
+      },
+      wipe: {
+        method: 'POST',
+        url: '/api/lockers/clear',
+        params: {}
+      },
+      setup: {
+        method: 'POST',
+        url: '/api/lockers/setup',
+        params: {},
+        isArray: true
       }
     }
   );
