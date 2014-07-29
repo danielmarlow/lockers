@@ -13,6 +13,7 @@ module.exports = {
   TWITTER_SECRET: "secret",
   GOOGLE_ID: "app-id",
   GOOGLE_SECRET: "secret",
+  TWILIO_SECRET: "79ff8829c9405be231bb51c7f70c0d13"
   // Control debug level for modules using visionmedia/debug
   // DEBUG: ""
 };
